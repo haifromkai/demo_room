@@ -1,0 +1,324 @@
+[gd_scene load_steps=19 format=3 uid="uid://d23nv487d3x8k"]
+
+[ext_resource type="Material" uid="uid://c7lndw5qjifbe" path="res://Textures/gridbox_green.tres" id="1_16kju"]
+[ext_resource type="Texture2D" uid="uid://cwxmqodnjf6vm" path="res://Textures/sky.hdr" id="1_yiypa"]
+[ext_resource type="Material" uid="uid://bojturaw5p7qx" path="res://Textures/gridbox_green_mirror.tres" id="2_7a8mn"]
+[ext_resource type="FontFile" uid="uid://bly7gu5wstxhh" path="res://Fonts/palatinolinotype_roman.ttf" id="2_wvgf5"]
+[ext_resource type="Script" path="res://Scripts/Demo Player.gd" id="3_lwmty"]
+[ext_resource type="Texture2D" uid="uid://c2i5ssonijxrk" path="res://Textures/gridbox_green.png" id="4_qt1ss"]
+[ext_resource type="Material" uid="uid://kyw6oc3c3lxk" path="res://Textures/gridbox_clear.tres" id="6_dup2u"]
+[ext_resource type="Material" uid="uid://dvxrym4fvqni0" path="res://Textures/gridbox_clear_mirror_soft.tres" id="7_80bdp"]
+[ext_resource type="Material" uid="uid://bjkljcjoj28dm" path="res://Textures/gridbox_clear_mirror.tres" id="8_jllan"]
+[ext_resource type="Texture2D" uid="uid://c20ica6najud" path="res://Textures/square_target_updated.png" id="9_aycwv"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_maieo"]
+panorama = ExtResource("1_yiypa")
+
+[sub_resource type="Sky" id="Sky_sai77"]
+sky_material = SubResource("PanoramaSkyMaterial_maieo")
+radiance_size = 6
+
+[sub_resource type="Environment" id="Environment_g5vmn"]
+background_mode = 2
+background_energy_multiplier = 0.62
+sky = SubResource("Sky_sai77")
+sky_rotation = Vector3(0, 5.02655, 0)
+tonemap_mode = 2
+ssao_enabled = true
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 1.6
+glow_enabled = true
+glow_bloom = 0.02
+volumetric_fog_density = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_od07y"]
+albedo_texture = ExtResource("4_qt1ss")
+metallic_specular = 0.4
+roughness = 0.7
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fa5gp"]
+albedo_texture = ExtResource("4_qt1ss")
+metallic_specular = 0.4
+roughness = 0.7
+uv1_offset = Vector3(0, 0, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrwhi"]
+albedo_texture = ExtResource("9_aycwv")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.5, 0.5, 0.914)
+uv1_triplanar = true
+uv2_triplanar_sharpness = 0.450625
+uv2_world_triplanar = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1s30x"]
+radius = 0.3
+height = 1.84
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tgqf6"]
+radius = 0.3
+height = 1.84
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_g5vmn")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.295708, 0.614041, -0.731786, 0, 0.766044, 0.642788, 0.955278, 0.190077, -0.226525, 0, 20, 0)
+light_color = Color(0.635294, 0.686275, 0.776471, 1)
+light_energy = 3.0
+shadow_enabled = true
+shadow_bias = 0.03
+shadow_blur = 2.0
+metadata/_edit_lock_ = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+use_collision = true
+
+[node name="Label3D" type="Label3D" parent="CSGCombiner3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 3.7, 0)
+visibility_range_begin = 1.0
+visibility_range_begin_margin = 2.0
+visibility_range_end = 6.0
+visibility_range_end_margin = 3.9
+visibility_range_fade_mode = 1
+pixel_size = 0.0001
+alpha_antialiasing_mode = 1
+texture_filter = 5
+text = "Demo Room"
+font = ExtResource("2_wvgf5")
+font_size = 4500
+outline_size = 0
+
+[node name="Floor" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.25)
+snap = 1.0
+size = Vector3(16, 1, 26.5)
+material = ExtResource("1_16kju")
+
+[node name="Wall Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 10.5)
+snap = 1.0
+size = Vector3(14, 7, 1)
+material = ExtResource("2_7a8mn")
+
+[node name="Wall Front L" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, -15.25)
+size = Vector3(6, 4, 0.5)
+material = ExtResource("1_16kju")
+
+[node name="Wall Front R" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, -15.25)
+size = Vector3(6, 4, 0.5)
+material = ExtResource("1_16kju")
+
+[node name="Wall Front Center" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -15.25)
+size = Vector3(4, 1, 0.5)
+material = ExtResource("1_16kju")
+
+[node name="Wall Front Frame" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.75, -15.25)
+size = Vector3(16, 0.5, 0.5)
+material = ExtResource("1_16kju")
+
+[node name="Wall L1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 4, 5.5)
+snap = 1.0
+size = Vector3(1, 7, 11)
+material = ExtResource("1_16kju")
+
+[node name="Wall L2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 1, -7.5)
+snap = 1.0
+size = Vector3(1, 1, 15)
+material = ExtResource("1_16kju")
+
+[node name="Wall L3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.75, 4.75, -7.5)
+snap = 1.0
+size = Vector3(0.5, 0.5, 14.999)
+material = ExtResource("1_16kju")
+
+[node name="Wall R1" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 4, 5.5)
+snap = 1.0
+size = Vector3(1, 7, 11)
+material = ExtResource("2_7a8mn")
+
+[node name="Wall R2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 1, -7.5)
+snap = 1.0
+size = Vector3(1, 1, 15)
+material = ExtResource("2_7a8mn")
+
+[node name="Wall R3" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 4.75, -7.5)
+snap = 1.0
+size = Vector3(0.5, 0.5, 15)
+material = ExtResource("1_16kju")
+
+[node name="Ceiling" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0999999, 4, 7.9)
+snap = 1.0
+size = Vector3(14.9, 1, 5.8)
+material = ExtResource("1_16kju")
+
+[node name="Window Bot Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 10.5)
+operation = 2
+snap = 1.0
+size = Vector3(10, 1.5, 1.1)
+material = ExtResource("2_7a8mn")
+
+[node name="Window Bot L" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5, 2.25, 7.5)
+operation = 2
+size = Vector3(1.1, 1.5, 3)
+material = ExtResource("1_16kju")
+
+[node name="Window Bot R" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 2.25, 7.5)
+operation = 2
+size = Vector3(1.1, 1.5, 3)
+material = ExtResource("1_16kju")
+
+[node name="Window Top Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25, 10.5)
+operation = 2
+size = Vector3(12, 1.5, 2)
+material = SubResource("StandardMaterial3D_od07y")
+
+[node name="Window Top LR" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25, 5)
+operation = 2
+size = Vector3(16, 1.5, 8)
+material = SubResource("StandardMaterial3D_od07y")
+
+[node name="Table" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 4)
+snap = 0.025
+size = Vector3(8, 0.1, 1)
+material = SubResource("StandardMaterial3D_fa5gp")
+
+[node name="Obstacle L" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -6.5, 1.1, 2)
+snap = 1.0
+size = Vector3(5, 0.1, 1)
+material = SubResource("StandardMaterial3D_fa5gp")
+
+[node name="Obstacle R" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.5, 1.1, 2)
+snap = 1.0
+size = Vector3(5, 0.1, 1)
+material = SubResource("StandardMaterial3D_fa5gp")
+
+[node name="Ramp L" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 0.5, 4)
+polygon = PackedVector2Array(7, 0, 3, 2, -1, 4, -1, 0)
+depth = 2.0
+material = ExtResource("1_16kju")
+
+[node name="Ramp R" type="CSGPolygon3D" parent="CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6, 0.5, 4)
+polygon = PackedVector2Array(7, 0, 3, 2, -1, 4, -1, 0)
+depth = 2.0
+material = ExtResource("2_7a8mn")
+
+[node name="Glass Bot Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 10.5005)
+size = Vector3(9.999, 1.499, 0.001)
+material = ExtResource("8_jllan")
+
+[node name="Glass Top Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.25, 10.5005)
+size = Vector3(11.999, 1.499, 0.001)
+material = ExtResource("8_jllan")
+
+[node name="Glass Bot L" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5005, 2.25, 7.5)
+size = Vector3(0.001, 1.499, 2.999)
+material = ExtResource("6_dup2u")
+
+[node name="Glass Top L" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5005, 6.25, 5)
+cast_shadow = 0
+size = Vector3(0.001, 1.499, 7.999)
+material = ExtResource("6_dup2u")
+
+[node name="Glass Top L2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5005, 3.0005, -7.5015)
+cast_shadow = 0
+size = Vector3(0.001, 2.999, 14.996)
+material = ExtResource("6_dup2u")
+
+[node name="Glass Bot R" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4995, 2.25, 7.5)
+size = Vector3(0.001, 1.499, 2.999)
+material = ExtResource("8_jllan")
+
+[node name="Glass Top R" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4995, 6.25, 5)
+size = Vector3(0.001, 1.499, 7.999)
+material = ExtResource("7_80bdp")
+
+[node name="Glass Top R2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4995, 3.0005, -7.5005)
+cast_shadow = 0
+size = Vector3(0.001, 2.999, 14.998)
+material = ExtResource("7_80bdp")
+
+[node name="Glass Front Wall" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0025, -15.4995)
+size = Vector3(3.998, 3, 0.001)
+material = ExtResource("6_dup2u")
+
+[node name="Square Target" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -13.85)
+size = Vector3(2, 2, 0.1)
+material = SubResource("StandardMaterial3D_nrwhi")
+
+[node name="Square Target Back" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -13.9005)
+operation = 2
+size = Vector3(2, 2, 0.001)
+material = ExtResource("8_jllan")
+
+[node name="Demo Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 9.5)
+visible = false
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 1.0
+script = ExtResource("3_lwmty")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Demo Player"]
+visible = false
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_1s30x")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Demo Player"]
+shape = SubResource("CapsuleShape3D_tgqf6")
+
+[node name="Head" type="Node3D" parent="Demo Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558239, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Demo Player/Head"]
+transform = Transform3D(1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Demo Cam 1" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.0123407, 0.706999, 0, 0.999848, 0.0174524, -0.707107, -0.0123407, 0.706999, 5.4, 0.5, 9.5)
+fov = 80.0
+
+[node name="Demo Cam 2" type="Camera3D" parent="."]
+transform = Transform3D(-1, 2.11495e-08, 8.4826e-08, 0, 0.970296, -0.241922, -8.74228e-08, -0.241922, -0.970296, 0, -0.5, -5.2)
+fov = 77.0
+
+[node name="Demo Cam 3" type="Camera3D" parent="."]
+transform = Transform3D(0.60042, -0.0418523, -0.798589, 0, 0.99863, -0.052336, 0.799685, 0.0314236, 0.599597, -1, 0.4, -12.6)
+fov = 96.0
