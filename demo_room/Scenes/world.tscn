@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d23nv487d3x8k"]
+[gd_scene load_steps=22 format=3 uid="uid://d23nv487d3x8k"]
 
 [ext_resource type="Material" uid="uid://c7lndw5qjifbe" path="res://Textures/gridbox_green.tres" id="1_16kju"]
 [ext_resource type="Texture2D" uid="uid://cwxmqodnjf6vm" path="res://Textures/sky.hdr" id="1_yiypa"]
@@ -65,6 +65,14 @@ height = 1.84
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4o3t2"]
 radius = 0.3
 height = 0.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4hqqq"]
+radius = 0.22
+height = 0.52
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_yicdc"]
+radius = 0.3
+height = 1.83
 
 [node name="world" type="Node3D"]
 
@@ -298,6 +306,7 @@ material = ExtResource("8_jllan")
 [node name="Demo Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 9.5)
 floor_constant_speed = true
+floor_block_on_wall = false
 floor_max_angle = 0.872665
 floor_snap_length = 1.0
 script = ExtResource("3_lwmty")
@@ -318,6 +327,12 @@ shape = SubResource("CapsuleShape3D_4o3t2")
 disabled = true
 metadata/_edit_lock_ = true
 
+[node name="Crawling_CollisionShape3D" type="CollisionShape3D" parent="Demo Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.659, 0)
+shape = SubResource("CapsuleShape3D_4hqqq")
+disabled = true
+metadata/_edit_lock_ = true
+
 [node name="Head" type="Node3D" parent="Demo Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558239, 0)
 metadata/_edit_lock_ = true
@@ -327,8 +342,14 @@ transform = Transform3D(1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Demo Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.91853, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.919, 0)
+visible = false
 target_position = Vector3(0, 1.84, 0)
+metadata/_edit_lock_ = true
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Demo Player"]
+shape = SubResource("CapsuleShape3D_yicdc")
+target_position = Vector3(0, 0, 0)
 metadata/_edit_lock_ = true
 
 [node name="Demo Cam 1" type="Camera3D" parent="."]
