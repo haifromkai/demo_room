@@ -2,22 +2,32 @@ extends CharacterBody3D
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const sensitivity = 0.0007
-var speed
-const walk_speed = 3.0
-const sprint_speed = 5.6
-const jump_velocity = 6.8
 const gravity = 9.8
+const walk_speed = 3.0
+const crouch_speed = 1.5
+const sprint_speed = 5.5
+const jump_velocity = 6.8
+const head_height = 0.558
+
+var speed
+var crouch_depth = -0.7
+# var prone_depth = -1.4
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ONREADY VARIABLES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
+@onready var standing_collision_shape = $Standing_CollisionShape3D
+@onready var crouching_collision_shape = $Crouching_CollisionShape3D
+@onready var player_raycast = $RayCast3D
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func _ready():
 	# Disable cursor 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+	# F3 to get debug stats
 	Engine.get_frames_per_second()
+
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -38,11 +48,26 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
 
-	# Speed Handling
-	if Input.is_action_pressed("sprint"):
-		speed = sprint_speed
-	else:
-		speed = walk_speed
+	# Movement & Speed Handling
+	# Crouching State
+	if Input.is_action_pressed("crouch"):
+		speed = crouch_speed
+		head.position.y = lerp(head.position.y, head_height + crouch_depth, delta * 4.5)
+		standing_collision_shape.disabled = true
+		crouching_collision_shape.disabled = false
+
+	# Standing State
+	elif !player_raycast.is_colliding():
+		head.position.y = lerp(head.position.y, head_height, delta * 4.5)
+		standing_collision_shape.disabled = false
+		crouching_collision_shape.disabled = true
+
+		# Sprinting
+		if Input.is_action_pressed("sprint"):
+			speed = sprint_speed
+		# Walking
+		else:
+			speed = walk_speed
 
 	# Movement Handling
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")

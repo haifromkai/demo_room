@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d23nv487d3x8k"]
+[gd_scene load_steps=20 format=3 uid="uid://d23nv487d3x8k"]
 
 [ext_resource type="Material" uid="uid://c7lndw5qjifbe" path="res://Textures/gridbox_green.tres" id="1_16kju"]
 [ext_resource type="Texture2D" uid="uid://cwxmqodnjf6vm" path="res://Textures/sky.hdr" id="1_yiypa"]
@@ -62,6 +62,10 @@ height = 1.84
 radius = 0.3
 height = 1.84
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4o3t2"]
+radius = 0.3
+height = 0.9
+
 [node name="world" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -70,7 +74,8 @@ environment = SubResource("Environment_g5vmn")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.295708, 0.614041, -0.731786, 0, 0.766044, 0.642788, 0.955278, 0.190077, -0.226525, 0, 20, 0)
 light_color = Color(0.635294, 0.686275, 0.776471, 1)
-light_energy = 3.0
+light_energy = 3.2
+light_indirect_energy = 1.2
 shadow_enabled = true
 shadow_bias = 0.03
 shadow_blur = 2.0
@@ -88,6 +93,7 @@ visibility_range_end = 6.0
 visibility_range_end_margin = 3.9
 visibility_range_fade_mode = 1
 pixel_size = 0.0001
+billboard = 1
 alpha_antialiasing_mode = 1
 texture_filter = 5
 text = "Demo Room"
@@ -291,7 +297,6 @@ material = ExtResource("8_jllan")
 
 [node name="Demo Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08, 9.5)
-visible = false
 floor_constant_speed = true
 floor_max_angle = 0.872665
 floor_snap_length = 1.0
@@ -301,15 +306,30 @@ script = ExtResource("3_lwmty")
 visible = false
 cast_shadow = 0
 mesh = SubResource("CapsuleMesh_1s30x")
+metadata/_edit_lock_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Demo Player"]
+[node name="Standing_CollisionShape3D" type="CollisionShape3D" parent="Demo Player"]
 shape = SubResource("CapsuleShape3D_tgqf6")
+metadata/_edit_lock_ = true
+
+[node name="Crouching_CollisionShape3D" type="CollisionShape3D" parent="Demo Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.468799, 0)
+shape = SubResource("CapsuleShape3D_4o3t2")
+disabled = true
+metadata/_edit_lock_ = true
 
 [node name="Head" type="Node3D" parent="Demo Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.558239, 0)
+metadata/_edit_lock_ = true
 
 [node name="Camera3D" type="Camera3D" parent="Demo Player/Head"]
 transform = Transform3D(1, 0, 0, 0, 4, 0, 0, 0, 1, 0, 0, 0)
+metadata/_edit_lock_ = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Demo Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.91853, 0)
+target_position = Vector3(0, 1.84, 0)
+metadata/_edit_lock_ = true
 
 [node name="Demo Cam 1" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.0123407, 0.706999, 0, 0.999848, 0.0174524, -0.707107, -0.0123407, 0.706999, 5.4, 0.5, 9.5)
