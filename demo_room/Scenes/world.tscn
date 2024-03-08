@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://d23nv487d3x8k"]
+[gd_scene load_steps=24 format=3 uid="uid://d23nv487d3x8k"]
 
 [ext_resource type="Material" uid="uid://c7lndw5qjifbe" path="res://Textures/gridbox_green.tres" id="1_16kju"]
 [ext_resource type="Texture2D" uid="uid://cwxmqodnjf6vm" path="res://Textures/sky.hdr" id="1_yiypa"]
@@ -10,6 +10,8 @@
 [ext_resource type="Material" uid="uid://dvxrym4fvqni0" path="res://Textures/gridbox_clear_mirror_soft.tres" id="7_80bdp"]
 [ext_resource type="Material" uid="uid://bjkljcjoj28dm" path="res://Textures/gridbox_clear_mirror.tres" id="8_jllan"]
 [ext_resource type="Texture2D" uid="uid://c20ica6najud" path="res://Textures/square_target_updated.png" id="9_aycwv"]
+[ext_resource type="AudioStream" uid="uid://c4jw75eun1oce" path="res://Audio/Summit Ambience.mp3" id="11_ps5ot"]
+[ext_resource type="AudioStream" uid="uid://p0xvvqt5notb" path="res://Audio/Freeze I.mp3" id="12_eobay"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_maieo"]
 panorama = ExtResource("1_yiypa")
@@ -20,16 +22,22 @@ radiance_size = 6
 
 [sub_resource type="Environment" id="Environment_g5vmn"]
 background_mode = 2
-background_energy_multiplier = 0.62
+background_energy_multiplier = 0.6
 sky = SubResource("Sky_sai77")
 sky_rotation = Vector3(0, 5.02655, 0)
 tonemap_mode = 2
 ssao_enabled = true
 sdfgi_enabled = true
 sdfgi_bounce_feedback = 1.6
+sdfgi_cascades = 8
 glow_enabled = true
 glow_bloom = 0.02
-volumetric_fog_density = 0.1
+volumetric_fog_density = 0.0204
+volumetric_fog_gi_inject = 1.34
+volumetric_fog_detail_spread = 0.5
+volumetric_fog_ambient_inject = 1.11
+adjustment_enabled = true
+adjustment_saturation = 1.02
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_od07y"]
 albedo_texture = ExtResource("4_qt1ss")
@@ -82,7 +90,7 @@ environment = SubResource("Environment_g5vmn")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.295708, 0.614041, -0.731786, 0, 0.766044, 0.642788, 0.955278, 0.190077, -0.226525, 0, 20, 0)
 light_color = Color(0.635294, 0.686275, 0.776471, 1)
-light_energy = 3.2
+light_energy = 4.4
 light_indirect_energy = 1.2
 shadow_enabled = true
 shadow_bias = 0.03
@@ -123,7 +131,7 @@ material = ExtResource("2_7a8mn")
 
 [node name="Wall Front L" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, -15.25)
-size = Vector3(6, 4, 0.5)
+size = Vector3(6, 4, 0.51)
 material = ExtResource("1_16kju")
 
 [node name="Wall Front R" type="CSGBox3D" parent="CSGCombiner3D"]
@@ -343,7 +351,6 @@ metadata/_edit_lock_ = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Demo Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.919, 0)
-visible = false
 target_position = Vector3(0, 1.84, 0)
 metadata/_edit_lock_ = true
 
@@ -363,3 +370,36 @@ fov = 77.0
 [node name="Demo Cam 3" type="Camera3D" parent="."]
 transform = Transform3D(0.60042, -0.0418523, -0.798589, 0, 0.99863, -0.052336, 0.799685, 0.0314236, 0.599597, -1, 0.4, -12.6)
 fov = 96.0
+
+[node name="Ambiance1" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(-1, -8.74228e-08, 0, -3.82137e-15, 4.37114e-08, 1, -8.74228e-08, 1, -4.37114e-08, 0, 7.96131, 6.49056)
+stream = ExtResource("11_ps5ot")
+volume_db = -10.0
+autoplay = true
+max_distance = 11.0
+panning_strength = 0.1
+emission_angle_enabled = true
+emission_angle_degrees = 70.0
+emission_angle_filter_attenuation_db = -5.0
+attenuation_filter_cutoff_hz = 16000.0
+attenuation_filter_db = -8.0
+
+[node name="Ambiance2" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.32534, -6.9002)
+stream = ExtResource("11_ps5ot")
+volume_db = -11.0
+autoplay = true
+max_distance = 100.0
+panning_strength = 0.0
+emission_angle_enabled = true
+emission_angle_degrees = 75.0
+emission_angle_filter_attenuation_db = 0.0
+attenuation_filter_cutoff_hz = 20000.0
+attenuation_filter_db = -3.7
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_eobay")
+volume_db = -15.0
+pitch_scale = 1.07
+autoplay = true
+mix_target = 1
