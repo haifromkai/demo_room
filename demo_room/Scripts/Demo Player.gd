@@ -21,6 +21,7 @@ var crawl_state = false
 @onready var standing_collision_shape = $Standing_CollisionShape3D
 @onready var crouching_collision_shape = $Crouching_CollisionShape3D
 @onready var crawling_collision_shape = $Crawling_CollisionShape3D
+@onready var player_raycast = $RayCast3D
 @onready var player_shapecast = $ShapeCast3D
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,7 +49,7 @@ func _physics_process(delta):
 		velocity.y -= gravity * delta * 1.8
 
 	# Jump Handling
-	if Input.is_action_just_pressed("jump") and is_on_floor() and !Input.is_action_pressed("crouch"):
+	if Input.is_action_just_pressed("jump") and is_on_floor() and !Input.is_action_pressed("crouch") and !Input.is_action_pressed("crawl") and !player_raycast.is_colliding():
 		velocity.y = jump_velocity
 
 	# Stance & Speed Handling --------------------------------------------------------
@@ -72,8 +73,8 @@ func _physics_process(delta):
 
 	# Crouching State (Hold)
 	elif Input.is_action_pressed("crouch") and is_on_floor() and !Input.is_action_pressed("crawl") and crawl_state == false:
-		speed = lerp(speed, crouch_speed, delta * 8.0)
-		head.position.y = lerp(head.position.y, head_height + crouch_depth, delta * 3.6)
+		speed = lerp(speed, crouch_speed, delta * 9.0)
+		head.position.y = lerp(head.position.y, head_height + crouch_depth, delta * 3.2)
 		if head.position.y < head_height + crouch_depth + 0.3:
 			standing_collision_shape.disabled = true
 			crouching_collision_shape.disabled = false
@@ -85,7 +86,7 @@ func _physics_process(delta):
 			head.position.y = lerp(head.position.y, head_height, delta * 1.1)
 
 		else:
-			head.position.y = lerp(head.position.y, head_height, delta * 3.6)
+			head.position.y = lerp(head.position.y, head_height, delta * 3.2)
 
 		standing_collision_shape.disabled = false
 		crouching_collision_shape.disabled = true
