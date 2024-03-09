@@ -13,7 +13,9 @@ config_version=5
 config/name="demo_room"
 run/main_scene="res://Scenes/world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.PNG"
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+config/icon="res://icon.png"
+boot_splash/minimum_display_time=1000
 
 [autoload]
 

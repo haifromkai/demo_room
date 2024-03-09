@@ -7,7 +7,7 @@ const walk_speed = 3.0
 const crouch_speed = 1.4
 const crawl_speed = 1.0
 const sprint_speed = 5.5
-const jump_velocity = 6.8
+const jump_velocity = 6.1
 const head_height = 0.558
 
 var speed
@@ -46,7 +46,11 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	# Add Gravity
 	if not is_on_floor():
-		velocity.y -= gravity * delta * 1.8
+		velocity.y -= gravity * delta * 1.5
+
+	# Direction Handling
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	# Jump Handling
 	if Input.is_action_just_pressed("jump") and is_on_floor() and !Input.is_action_pressed("crouch") and !Input.is_action_pressed("crawl") and !player_raycast.is_colliding():
@@ -103,11 +107,6 @@ func _physics_process(delta):
 			else:
 				speed = walk_speed
 	#-------------------------------------------------------------------------------------
-
-	# Movement Handling
-	var input_dir = Input.get_vector("left", "right", "forward", "backward")
-	var direction = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-
 	# Add Inertia
 	if is_on_floor():
 		# Starting Speed
