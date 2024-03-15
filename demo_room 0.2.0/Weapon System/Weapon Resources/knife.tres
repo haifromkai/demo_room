@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=2 format=3 uid="uid://jc5l0ibtofv8"]
+
+[ext_resource type="Script" path="res://Weapon System/Weapon Resource.gd" id="1_m2jp8"]
+
+[resource]
+script = ExtResource("1_m2jp8")
+Weapon_Name = "knife"
+Init_Anim = "knife Init"
+Term_Anim = "knife Term"
+Current_Ammo = 0
+Reserve_Ammo = 0
+Magazine = 0
+Max_Ammo = 0
+Auto_Fire = false

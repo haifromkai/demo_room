@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=2 format=3 uid="uid://bp3aqbttii8mn"]
+
+[ext_resource type="Script" path="res://Weapon System/Weapon Resource.gd" id="1_74kpi"]
+
+[resource]
+script = ExtResource("1_74kpi")
+Weapon_Name = "pistol"
+Init_Anim = "pistol Init"
+Term_Anim = "pistol Term"
+Current_Ammo = 6
+Reserve_Ammo = 12
+Magazine = 6
+Max_Ammo = 24
+Auto_Fire = false

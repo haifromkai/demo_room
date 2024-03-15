@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=2 format=3 uid="uid://cjxlorr44eday"]
+
+[ext_resource type="Script" path="res://Weapon System/Weapon Resource.gd" id="1_of666"]
+
+[resource]
+script = ExtResource("1_of666")
+Weapon_Name = "rifle"
+Init_Anim = "rifle Init"
+Term_Anim = "rifle Term"
+Current_Ammo = 30
+Reserve_Ammo = 60
+Magazine = 30
+Max_Ammo = 60
+Auto_Fire = false

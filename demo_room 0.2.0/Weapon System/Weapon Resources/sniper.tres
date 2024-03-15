@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=2 format=3 uid="uid://do7m2fu0tdgkl"]
+
+[ext_resource type="Script" path="res://Weapon System/Weapon Resource.gd" id="1_07lbs"]
+
+[resource]
+script = ExtResource("1_07lbs")
+Weapon_Name = "sniper"
+Init_Anim = "sniper Init"
+Term_Anim = "sniper Term"
+Current_Ammo = 5
+Reserve_Ammo = 5
+Magazine = 5
+Max_Ammo = 15
+Auto_Fire = false
