@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c4jw75eun1oce"
+path="res://.godot/imported/Summit Ambience.mp3-f7de14ab0259f4b0560d91b35e75ed2e.mp3str"
+
+[deps]
+
+source_file="res://Audio/Summit Ambience.mp3"
+dest_files=["res://.godot/imported/Summit Ambience.mp3-f7de14ab0259f4b0560d91b35e75ed2e.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
