@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://6ux65tf0c4jp"]
+[gd_scene load_steps=31 format=3 uid="uid://6ux65tf0c4jp"]
 
 [ext_resource type="Script" path="res://Scripts/Demo Player.gd" id="1_v4hoj"]
 [ext_resource type="PackedScene" uid="uid://jl32w4b17en8" path="res://Weapon System/Weapon Models/rifle.glb" id="2_dik6a"]
@@ -10,6 +10,9 @@
 [ext_resource type="Resource" uid="uid://jc5l0ibtofv8" path="res://Weapon System/Weapon Resources/knife.tres" id="5_trej6"]
 [ext_resource type="PackedScene" uid="uid://bfvi6myvtawd8" path="res://Weapon System/Weapon Models/sniper.glb" id="5_w5nut"]
 [ext_resource type="Resource" uid="uid://do7m2fu0tdgkl" path="res://Weapon System/Weapon Resources/sniper.tres" id="6_34746"]
+[ext_resource type="FontFile" uid="uid://bly7gu5wstxhh" path="res://Fonts/palatinolinotype_roman.ttf" id="11_1wypx"]
+[ext_resource type="Texture2D" uid="uid://by5pes8qyg70c" path="res://HUD System/hp icon.png" id="12_mxj2e"]
+[ext_resource type="Texture2D" uid="uid://bm155reoivpyg" path="res://HUD System/stamina icon.png" id="13_xgdpd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1s30x"]
 radius = 0.3
@@ -663,6 +666,14 @@ _data = {
 "sniper Term": SubResource("Animation_ssx3p")
 }
 
+[sub_resource type="Theme" id="Theme_fdjw4"]
+default_font = ExtResource("11_1wypx")
+default_font_size = 30
+
+[sub_resource type="Theme" id="Theme_v6o45"]
+default_font = ExtResource("11_1wypx")
+default_font_size = 30
+
 [node name="Demo Player" type="CharacterBody3D"]
 floor_constant_speed = true
 floor_block_on_wall = false
@@ -728,7 +739,7 @@ transform = Transform3D(-0.999391, 0.00121784, -0.0348744, 0, 0.999391, 0.034899
 transform = Transform3D(-0.00021794, 0.000378986, 0.00195163, 0.000913733, 0.00176277, -0.000240274, -0.00176567, 0.000865453, -0.000365235, 0.0986285, 0.13352, -0.816136)
 
 [node name="sniper" parent="Head/Camera3D/Weapon System/FPS Rig" instance=ExtResource("5_w5nut")]
-transform = Transform3D(-0.995396, -0.0953027, -0.0101848, 0, -0.106263, 0.994338, -0.0958453, 0.98976, 0.105774, 0.245366, -0.328813, -0.288663)
+transform = Transform3D(-0.995396, -0.0953027, -0.0101848, 0, -0.106263, 0.994338, -0.0958453, 0.98976, 0.105773, 0.245366, -0.328813, -0.288663)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3D/Weapon System/FPS Rig"]
 unique_name_in_owner = true
@@ -751,5 +762,99 @@ grow_vertical = 2
 text = "+"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HUD_System" type="Node3D" parent="Head/Camera3D"]
+
+[node name="Bars" type="Node3D" parent="Head/Camera3D/HUD_System"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Head/Camera3D/HUD_System/Bars"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 120.0
+offset_top = -108.0
+offset_right = 208.0
+offset_bottom = -42.0
+grow_vertical = 0
+size_flags_vertical = 4
+theme = SubResource("Theme_fdjw4")
+
+[node name="Health" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("12_mxj2e")
+expand_mode = 2
+
+[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+layout_mode = 2
+text = "HP"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+layout_mode = 2
+
+[node name="Stamina" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+layout_mode = 2
+texture = ExtResource("13_xgdpd")
+expand_mode = 3
+
+[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+layout_mode = 2
+text = "STA"
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+layout_mode = 2
+
+[node name="Stance_State" type="Node3D" parent="Head/Camera3D/HUD_System"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Head/Camera3D/HUD_System/Stance_State"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -108.0
+offset_right = 53.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 0
+theme = SubResource("Theme_v6o45")
+
+[node name="Stance_State" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Stance_State"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Stance: "
+
+[node name="Current_Stance_State" type="Label" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Stance_State"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Speed_State" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+alignment = 1
+
+[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Speed_State"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Speed: "
+
+[node name="Current_Speed_State" type="Label" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Speed_State"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Weapon Info" type="Node3D" parent="Head/Camera3D/HUD_System"]
 
 [connection signal="animation_finished" from="Head/Camera3D/Weapon System/FPS Rig/AnimationPlayer" to="Head/Camera3D/Weapon System" method="_on_animation_player_animation_finished"]
