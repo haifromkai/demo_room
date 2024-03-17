@@ -24,9 +24,9 @@ var crawl_state = false
 @onready var player_raycast = $RayCast3D
 @onready var player_shapecast = $ShapeCast3D
 
-# HUD
-@onready var current_stance_state = $Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Stance_State/Current_Stance_State
-@onready var current_speed_state = $Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Speed_State/Current_Speed_State
+# HUD VARIABLES
+@onready var stance_state = $Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Stance_State/Current_Stance_State
+@onready var speed_state = $Head/Camera3D/HUD_System/Stance_State/VBoxContainer/Speed_State/Current_Speed_State
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ FUNCTIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 func _ready():
@@ -75,14 +75,14 @@ func _physics_process(delta):
 			crawling_collision_shape.disabled = false
 			crawl_state = true
 
-			# Current_Stance_State = STATE(CRAWLING) #
-			current_stance_state.text = "Crawling"
+			# Stance_State = STATE(CRAWLING) #
+			stance_state.text = "Crawling"
 
-			# Current_Speed_State = STATE(IDLE) #
+			# Speed_State = STATE(IDLE) #
 			if abs(velocity.x) < 0.2 and abs(velocity.y) < 0.2 and abs(velocity.z) < 0.2:
-				current_speed_state.text = "Idle"
+				speed_state.text = "Idle"
 			else:
-				current_speed_state.text = "Moving While In Crawl"
+				speed_state.text = "!Idle"
 		# if abs(head.position.y - (head_height + crawl_depth)) < 0.01:
 			# print("Camera Shake")
 			# implement camera shake
@@ -96,14 +96,14 @@ func _physics_process(delta):
 			crouching_collision_shape.disabled = false
 			crawling_collision_shape.disabled = true
 
-			# Current_Stance_State = STATE(CROUCHING) #
-			current_stance_state.text = "Crouching"
+			# Stance_State = STATE(CROUCHING) #
+			stance_state.text = "Crouching"
 
-			# Current_Speed_State = STATE(IDLE) #
+			# Speed_State = STATE(IDLE) #
 			if abs(velocity.x) < 0.2 and abs(velocity.y) < 0.2 and abs(velocity.z) < 0.2:
-				current_speed_state.text = "Idle"
+				speed_state.text = "Idle"
 			else:
-				current_speed_state.text = "Moving While Crouched"
+				speed_state.text = "!Idle"
 
 	# Standing State
 	elif !player_shapecast.is_colliding():
@@ -118,24 +118,24 @@ func _physics_process(delta):
 		crawling_collision_shape.disabled = true
 		crawl_state = false
 
-		# Current_Stance_State = STATE(STANDING) #
-		current_stance_state.text = "Standing"
+		# Stance_State = STATE(STANDING) #
+		stance_state.text = "Standing"
 
-		# Current_Speed_State = STATE(IDLE) #
+		# Speed_State = STATE(IDLE) #
 		if abs(velocity.x) < 0.5 and abs(velocity.y) < 0.5 and abs(velocity.z) < 0.5:
-			current_speed_state.text = "Idle"
+			speed_state.text = "Idle"
 
 		else:
 			# Sprinting
 			if Input.is_action_pressed("sprint") and !Input.is_action_pressed("backward"):
 				speed = lerp(speed, sprint_speed, delta * 3.6)
-				# Current_Speed_State = STATE(SPRINTING) #
-				current_speed_state.text = "Sprinting"
+				# Speed_State = STATE(SPRINTING) #
+				speed_state.text = "Sprinting"
 
 			# Walking
 			else:
-				# Current_Speed_State = STATE(WALKING) #
-				current_speed_state.text = "Walking"
+				# Speed_State = STATE(WALKING) #
+				speed_state.text = "Walking"
 
 				if head.position.y < head_height + crouch_depth:
 					speed = move_toward(crawl_speed, crouch_speed, delta * 0.5)
@@ -150,6 +150,7 @@ func _physics_process(delta):
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
 			velocity.y = lerp(velocity.y, direction.y * speed, delta * 6.0)
 			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+
 		# Stopping Speed
 		else:
 			velocity.x = lerp(velocity.x, direction.x * speed, delta * 8.0)
@@ -161,13 +162,13 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, direction.x * speed, delta * 1.5)
 		velocity.z = lerp(velocity.z, direction.z * speed, delta * 1.5)
 
-		# Current_Stance_State = STATE(JUMPING) #
+		# Stance_State = STATE(JUMPING) #
 		if velocity.y > 0:
-			current_stance_state.text = "Jumping"
+			stance_state.text = "Jumping"
 
-		# Current_Stance_State = STATE(FALLING) #
+		# Stance_State = STATE(FALLING) #
 		if velocity.y < 0:
-			current_stance_state.text = "Falling"
+			stance_state.text = "Falling"
 
 
 	move_and_slide()

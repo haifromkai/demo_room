@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bfvi6myvtawd8" path="res://Weapon System/Weapon Models/sniper.glb" id="5_w5nut"]
 [ext_resource type="Resource" uid="uid://do7m2fu0tdgkl" path="res://Weapon System/Weapon Resources/sniper.tres" id="6_34746"]
 [ext_resource type="FontFile" uid="uid://bly7gu5wstxhh" path="res://Fonts/palatinolinotype_roman.ttf" id="11_1wypx"]
-[ext_resource type="Texture2D" uid="uid://by5pes8qyg70c" path="res://HUD System/hp icon.png" id="12_mxj2e"]
+[ext_resource type="Texture2D" uid="uid://rxvem46lihaa" path="res://HUD System/hp icon.png" id="12_3nq4x"]
 [ext_resource type="Texture2D" uid="uid://bm155reoivpyg" path="res://HUD System/stamina icon.png" id="13_xgdpd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_1s30x"]
@@ -668,7 +668,7 @@ _data = {
 
 [sub_resource type="Theme" id="Theme_fdjw4"]
 default_font = ExtResource("11_1wypx")
-default_font_size = 30
+default_font_size = 40
 
 [sub_resource type="Theme" id="Theme_v6o45"]
 default_font = ExtResource("11_1wypx")
@@ -771,61 +771,67 @@ vertical_alignment = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 120.0
-offset_top = -108.0
-offset_right = 208.0
-offset_bottom = -42.0
+offset_left = 100.0
+offset_top = -128.0
+offset_right = 544.0
+offset_bottom = -34.0
 grow_vertical = 0
-size_flags_vertical = 4
+size_flags_vertical = 3
 theme = SubResource("Theme_fdjw4")
+theme_override_constants/separation = 10
 
 [node name="Health" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 6
 
 [node name="Icon" type="TextureRect" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("12_mxj2e")
+texture = ExtResource("12_3nq4x")
 expand_mode = 2
 
-[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+[node name="ProgressBar" type="ProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
+custom_minimum_size = Vector2(400, 20)
 layout_mode = 2
-text = "HP"
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Health"]
-layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 1.0
+value = 80.0
+show_percentage = false
 
 [node name="Stamina" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer"]
 layout_mode = 2
 
 [node name="Icon" type="TextureRect" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("13_xgdpd")
-expand_mode = 3
+expand_mode = 2
 
-[node name="Text" type="Label" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+[node name="ProgressBar" type="ProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
+custom_minimum_size = Vector2(400, 20)
 layout_mode = 2
-text = "STA"
-
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Head/Camera3D/HUD_System/Bars/VBoxContainer/Stamina"]
-layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 1.0
+value = 90.0
+show_percentage = false
 
 [node name="Stance_State" type="Node3D" parent="Head/Camera3D/HUD_System"]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Head/Camera3D/HUD_System/Stance_State"]
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -53.0
-offset_top = -108.0
-offset_right = 53.0
-offset_bottom = -42.0
-grow_horizontal = 2
+offset_left = 104.0
+offset_top = -217.0
+offset_right = 243.0
+offset_bottom = -123.0
 grow_vertical = 0
 size_flags_horizontal = 0
 theme = SubResource("Theme_v6o45")
+theme_override_constants/separation = 10
 
 [node name="Stance_State" type="HBoxContainer" parent="Head/Camera3D/HUD_System/Stance_State/VBoxContainer"]
 layout_mode = 2
