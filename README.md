@@ -18,6 +18,9 @@ Description: The Demo Room is a dedicated space to refine my FPS players mechani
 🎉v0.1.0 Released - Initial Controller System - 3/8/24 <br>
 Feel free to play and give feedback! Download is in the releases section. <br>
 
+⚙️v0.2.0 In Progress <br>
+Currently working on Basic Weapon System and Controller Player Stance States
+
 The 8 systems that will be implemented and tested in the Demo Room:
 ![8systems](https://github.com/haifromkai/demo_room/assets/49883801/6aa0c03d-922e-40c1-8a3e-0944ab6fe992)
 
