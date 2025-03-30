@@ -12,7 +12,6 @@
 
 # About the Project
 Name: demo_room <br>
-Started: 3/4/24 <br>
 Description: The Demo Room is a dedicated space to refine my FPS players mechanics, weapons, and animations within a controlled environment for future projects. Essentially a starting template. <br>
 
 🎉v0.1.0 Released - Initial Controller System - 3/8/24 <br>
